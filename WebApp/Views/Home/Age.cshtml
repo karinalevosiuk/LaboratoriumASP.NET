@@ -1,0 +1,16 @@
+
+@{
+    ViewBag.Title = "Age";
+    Layout = "_Layout";
+}
+
+<form asp-action="Age" method="post">
+    <label for="birthDate">Data urodzin:</label>
+    <input type="date" id="birthDate" name="birthDate" required />
+    <button type="submit">Oblicz wiek</button>
+</form>
+
+@if (ViewBag.Age != null)
+{
+<h3>Twój wiek: @ViewBag.Age</h3>
+}
