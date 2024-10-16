@@ -20,7 +20,7 @@ public class HomeController : Controller
     {
         return View();
     }
-    public IActionResult Calculator(Operator? op, double? x, double? y)
+    public IActionResult Calculator(Operators? op, double? x, double? y)
     {
         //var op =Request.Query["op"];
         //var x = double.Parse(Request.Query["x"]);
@@ -39,19 +39,19 @@ public class HomeController : Controller
         double? result = 0.0;
         switch (op)
         {
-            case Operator.Add:
+            case Operators.Add:
                 result = x + y;
                 ViewBag.Operator = "+";
                 break;
-            case Operator.Sub:
+            case Operators.Sub:
                 result = x - y;
                 ViewBag.Operator = "-";
                 break;
-            case Operator.Mul:
+            case Operators.Mul:
                 result = x * y;
                 ViewBag.Operator = "*";
                 break;
-            case Operator.Div:
+            case Operators.Div:
                 result = x / y;
                 ViewBag.Operator = ":";
                 break;
@@ -122,7 +122,3 @@ public class HomeController : Controller
     }
 }
 
-public enum Operator
-{
-    Add,Sub,Mul,Div
-}
