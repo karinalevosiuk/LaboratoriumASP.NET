@@ -6,30 +6,30 @@ namespace WebApp.Controllers;
 public class CalculatorController : Controller
 {
     // GET
-    public IActionResult Index()
-    {
-        return View();
-    }
-    
-    
-    public IActionResult Result(Calculator model)
-    {
-        if (!model.IsValid())
-        {
-            return View("Error");
-        }
-        return View(model);
-    }
-    
     public IActionResult Form()
     {
         return View();
     }
+ 
     
     
-    public enum Operators
+    [HttpPost]
+    public IActionResult Result([FromForm] Calculator model)
     {
-        Add,Sub,Mul,Div
+        if (!model.IsValid())
+        {
+            ViewBag.ErrorMessage = "Niepoprawne dane wejściowe!";
+            return View("CustomError");
+        }
+
+        return View(model);
     }
     
+   
+    
+    
+    public enum Operator
+    {
+        Add,Sub,Div,Mul,
+    }
 }

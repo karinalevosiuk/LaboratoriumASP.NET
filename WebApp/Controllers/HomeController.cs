@@ -20,14 +20,14 @@ public class HomeController : Controller
     {
         return View();
     }
-    public IActionResult Calculator(Operators? op, double? x, double? y)
+    public IActionResult Calculator(Operators? op, double? a, double? b)
     {
         //var op =Request.Query["op"];
         //var x = double.Parse(Request.Query["x"]);
         //var y = double.Parse(Request.Query["y"]);
-        if (x is null || y is null)
+        if (a is null || b is null)
         {
-            ViewBag.ErrorMessage = "Niepoprawny format liczby x lub y lub ich brak!";
+            ViewBag.ErrorMessage = "Niepoprawny format liczby a lub b lub ich brak!";
             return View("CalculatorError");
         }
 
@@ -36,32 +36,35 @@ public class HomeController : Controller
             ViewBag.ErrorMessage = "Nieznany operator!";
             return View("CalculatorError");
         }
+        
+        ViewBag.A = a;
+        ViewBag.B = b;
         double? result = 0.0;
         switch (op)
         {
             case Operators.Add:
-                result = x + y;
+                result = a + b;
                 ViewBag.Operator = "+";
                 break;
             case Operators.Sub:
-                result = x - y;
+                result = a - b;
                 ViewBag.Operator = "-";
                 break;
             case Operators.Mul:
-                result = x * y;
+                result = a * b;
                 ViewBag.Operator = "*";
                 break;
             case Operators.Div:
-                result = x / y;
-                ViewBag.Operator = ":";
+                result = a / b;
+                ViewBag.Operator = "/";
                 break;
                 
             
         }
         
         ViewBag.Result = result;
-        ViewBag.x = x;
-        ViewBag.y = y;
+        ViewBag.x = a;
+        ViewBag.y = b;
         
         return View();
     }
