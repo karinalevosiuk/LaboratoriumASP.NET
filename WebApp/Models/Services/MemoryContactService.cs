@@ -74,7 +74,7 @@ public class MemoryContactService : IContactService
         return _contacts.Values.ToList();
     }
 
-    public ContactModel? GetById(int id)
+    public ContactModel GetById(int id)
     {
         return _contacts[id];
     }
