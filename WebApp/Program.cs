@@ -1,3 +1,4 @@
+using WebApp.Models;
 using WebApp.Models.Services;
 
 namespace WebApp;
@@ -10,8 +11,8 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
-        //skojarzenie MemoryContactService z interfejsem, tworzenie jednej instancji 
-        builder.Services.AddSingleton<IContactService, MemoryContactService>();
+        builder.Services.AddDbContext<AppDbContext>();
+        builder.Services.AddTransient<IContactService,EFContactService>();
 
         var app = builder.Build();
 
