@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection.PortableExecutable;
+
 namespace WebApp.Models;
 
 [Table(name:"contacts")]
@@ -28,4 +30,8 @@ public class ContactEntity
     public Category Category { get; set; }  
     
     public DateTime Created { get; set; }
+    
+    public int OrganizationId { get; set; }
+    
+    public OrganizationEntity? Organization { get; set; }
 }

@@ -1,4 +1,6 @@
-﻿namespace WebApp.Models.Services;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace WebApp.Models.Services;
 
 public class EFContactService: IContactService
 {
@@ -30,13 +32,20 @@ public class EFContactService: IContactService
     public List<ContactModel> GetAll()
     {
         return _context.Contacts
+            .Include(e => e.Organization)
             .Select(e => ContactMapper.FromEntity(e))
             .ToList();
     }
 
     public ContactModel? GetById(int id)
     {
-        var entity = _context.Contacts.Find(id);
+        var entity = _context.Contacts.Include(c =>c.Organization)
+            .FirstOrDefault(c => c.Id == id);
         return entity != null ? ContactMapper.FromEntity(entity) : null;
+    }
+
+    public List<OrganizationEntity> GetAllOrganizations()
+    {
+        return _context.Organizations.ToList();
     }
 }

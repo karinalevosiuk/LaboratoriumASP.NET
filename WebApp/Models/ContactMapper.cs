@@ -4,7 +4,7 @@ public class ContactMapper
 {
     public static ContactEntity ToEntity(ContactModel arg)
     {
-        return new ContactEntity()
+        return new ()
         {
             Id = arg.Id,
             FirstName = arg.FirstName,
@@ -12,13 +12,15 @@ public class ContactMapper
             BirthDate = arg.BirthDate,
             PhoneNumber = arg.PhoneNumber,
             Email = arg.Email,
-            Category = arg.Category
+            Category = arg.Category,
+            Organization = arg.Organization,
+            OrganizationId = arg.OrganizationId
         };
     }
 
     public static ContactModel FromEntity(ContactEntity arg)
     {
-        return new ContactModel()
+        return new ()
         {
             Id = arg.Id,
             FirstName = arg.FirstName,
@@ -26,7 +28,10 @@ public class ContactMapper
             BirthDate = arg.BirthDate,
             PhoneNumber = arg.PhoneNumber,
             Email = arg.Email,
-            Category = arg.Category
+            Category = arg.Category,
+            OrganizationId = arg.OrganizationId,
+            Organization = arg.Organization
+            
         };
     }
 }

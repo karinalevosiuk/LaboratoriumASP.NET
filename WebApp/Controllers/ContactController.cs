@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Net.Mime;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp.Models;
 using WebApp.Models.Services;
 
@@ -24,7 +26,15 @@ public class ContactController : Controller
     [HttpGet]
     public IActionResult Add()
     {
-        return View();
+        var model = new ContactModel();
+        model.Organizations = _contactService.GetAllOrganizations()
+            .Select(e => new SelectListItem()
+        {
+            Value = e.Id.ToString(),
+            Text = e.Name,
+            Selected = e.Id == 102
+        }).ToList();
+        return View(model);
     }
     
     //Odebranie danych z formularza, zapisa kontaktu i powrot do listy kontaktow
@@ -33,7 +43,14 @@ public class ContactController : Controller
     {
         if (!ModelState.IsValid)
         {
-            return View();
+            model.Organizations = _contactService.GetAllOrganizations()
+                .Select(e => new SelectListItem()
+                {
+                    Value = e.Id.ToString(),
+                    Text = e.Name,
+                    Selected = e.Id == 102
+                }).ToList();
+            return View(model);
         }     
         _contactService.Add(model);
         return RedirectToAction(nameof(Index));
