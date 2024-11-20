@@ -1,11 +1,12 @@
 ﻿using System.Net.Mime;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp.Models;
 using WebApp.Models.Services;
 
 namespace WebApp.Controllers;
-
+[Authorize(Roles = "admin,user")]
 public class ContactController : Controller
 {
    private readonly IContactService _contactService;
@@ -15,7 +16,7 @@ public class ContactController : Controller
        _contactService = contactService;
    }
 
-
+    [AllowAnonymous]
    // Lista kontaktow
     public IActionResult Index()
     {
