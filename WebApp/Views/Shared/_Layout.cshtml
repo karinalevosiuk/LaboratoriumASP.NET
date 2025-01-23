@@ -1,5 +1,10 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using Microsoft.AspNetCore.Http
+@{
+    var username = Context.Session.GetString("Username"); 
+}
+
+<!DOCTYPE html>
+<html lang="pl">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -29,14 +34,37 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-route-op="sub" asp-route-x="13" asp-route-y="5" asp-area="" asp-action="Calculator" >Calculator</a>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Age">Age</a>
-                        </li>
+                        <a class="nav-link text-dark" asp-controller="Calculator" asp-action="Form" >Calculator</a>
+                    </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark"  asp-controller="Contact" asp-action="Index">Contacts</a>
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Age">Age</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Contact" asp-action="Index">Contacts</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Hero" asp-action="Index">Superheroes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Superpowers" asp-action="Index">Superpowers</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    @if (!string.IsNullOrEmpty(username)) 
+                    {
+                        <li class="nav-item">
+                            <span class="nav-link text-dark">Witaj, @username!</span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/Account/Logout">Wyloguj się</a> 
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/Account/Login">Zaloguj się</a> 
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
@@ -56,6 +84,8 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
+
+
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

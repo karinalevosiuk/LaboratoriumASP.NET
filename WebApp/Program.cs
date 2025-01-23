@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using WebApp.Models;
 using WebApp.Models.Services;
 
 namespace WebApp;
@@ -7,29 +9,49 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
-        // Add services to the container.
+        
+        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+        
         builder.Services.AddControllersWithViews();
-        //skojarzenie MemoryContactService z interfejsem, tworzenie jednej instancji 
+        
+        builder.Services.AddScoped<UserAuthService>();  
+        
         builder.Services.AddSingleton<IContactService, MemoryContactService>();
+        
+        builder.Services.AddSession(options =>
+        {
+            options.IdleTimeout = TimeSpan.FromMinutes(30);  
+            options.Cookie.HttpOnly = true; 
+        });
+        
+        builder.Services.AddAuthentication("Cookies")
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/Account/Login"; 
+                options.LogoutPath = "/Account/Logout"; 
+            });
 
         var app = builder.Build();
-
-        // Configure the HTTP request pipeline.
-        if (!app.Environment.IsDevelopment())
+        
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+        else
         {
             app.UseExceptionHandler("/Home/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-
-        app.UseRouting();
-
-        app.UseAuthorization();
-
+        
+        app.UseSession();
+        
+        app.UseAuthentication();  
+        app.UseAuthorization();   
+        
         app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");

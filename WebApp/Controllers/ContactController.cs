@@ -13,21 +13,18 @@ public class ContactController : Controller
        _contactService = contactService;
    }
 
-
-   // Lista kontaktow
+   
     public IActionResult Index()
     {
         return View(_contactService.GetAll());
     }
-
-    //Zwraca formularz dodania kontaktu
+    
     [HttpGet]
     public IActionResult Add()
     {
         return View();
     }
     
-    //Odebranie danych z formularza, zapisa kontaktu i powrot do listy kontaktow
     [HttpPost]
     public IActionResult Add(ContactModel model)
     {

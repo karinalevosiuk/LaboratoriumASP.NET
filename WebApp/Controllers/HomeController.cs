@@ -13,33 +13,29 @@ public class HomeController : Controller
         _logger = logger;
     }
     
-    //Zadanie domowe
-    //Napisz metode Age, ktora przyjmuje parametre z data urodzin i wyswietla wiek w latach, miesiacach i dniach
-
     public IActionResult Index()
     {
         return View();
     }
     public IActionResult Calculator(Operators? op, double? a, double? b)
     {
-        //var op =Request.Query["op"];
-        //var x = double.Parse(Request.Query["x"]);
-        //var y = double.Parse(Request.Query["y"]);
         if (a is null || b is null)
         {
             ViewBag.ErrorMessage = "Niepoprawny format liczby a lub b lub ich brak!";
             return View("CalculatorError");
         }
-
+        
         if (op is null)
         {
             ViewBag.ErrorMessage = "Nieznany operator!";
             return View("CalculatorError");
         }
-        
+    
         ViewBag.A = a;
         ViewBag.B = b;
+
         double? result = 0.0;
+        
         switch (op)
         {
             case Operators.Add:
@@ -55,19 +51,23 @@ public class HomeController : Controller
                 ViewBag.Operator = "*";
                 break;
             case Operators.Div:
+                if (b == 0)
+                {
+                    ViewBag.ErrorMessage = "Nie można dzielić przez zero!";
+                    return View("CalculatorError");
+                }
                 result = a / b;
                 ViewBag.Operator = "/";
                 break;
-                
-            
         }
         
         ViewBag.Result = result;
         ViewBag.x = a;
         ViewBag.y = b;
-        
+    
         return View();
     }
+
     public IActionResult About()
     {
         return View();

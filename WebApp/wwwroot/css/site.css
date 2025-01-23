@@ -20,3 +20,46 @@ html {
 body {
   margin-bottom: 60px;
 }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 18px;
+  text-align: left;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.pagination {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.pagination a {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  text-decoration: none;
+  color: #007bff;
+  border-radius: 4px;
+}
+
+.pagination a.active {
+  background-color: #007bff;
+  color: white;
+  pointer-events: none;
+}
+
+.pagination a:hover {
+  background-color: #0056b3;
+  color: white;
+}
