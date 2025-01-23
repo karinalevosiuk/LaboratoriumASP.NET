@@ -1,0 +1,74 @@
+﻿@model List<WebApp.Models.Superheroes.Hero>
+
+<h1 class="text-center">Lista Superbohaterów</h1>
+
+<div class="text-end mb-3">
+    <a asp-action="Create" class="btn btn-primary">Dodaj nowego bohatera</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Imię Superbohatera</th>
+                <th>Pełne Imię</th>
+                <th>Waga</th>
+                <th>Wzrost</th>
+                <th>Supermoce</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hero in Model)
+            {
+                <tr>
+                    <td>@hero.SuperheroName</td>
+                    <td>@hero.FullName</td>
+                    <td>@hero.Weight</td>
+                    <td>@hero.Height</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@hero.Id" class="btn btn-info btn-sm">
+                            Zobacz supermoce
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="container text-center mt-3">
+    <nav aria-label="Pagination">
+        <ul class="pagination justify-content-center">
+
+            <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                <a class="page-link" asp-action="Index" asp-route-page="1">Pierwsza</a>
+            </li>
+            <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                <a class="page-link" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)">Poprzednia</a>
+            </li>
+
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                if (i == 1 || i == ViewBag.TotalPages || Math.Abs(i - ViewBag.CurrentPage) <= 2)
+                {
+                    <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                    </li>
+                }
+                else if (i == 2 || i == ViewBag.TotalPages - 1)
+                {
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                }
+            }
+
+            <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                <a class="page-link" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)">Następna</a>
+            </li>
+            <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                <a class="page-link" asp-action="Index" asp-route-page="@(ViewBag.TotalPages)">Ostatnia</a>
+            </li>
+        </ul>
+    </nav>
+</div>

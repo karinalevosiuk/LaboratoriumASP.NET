@@ -1,0 +1,21 @@
+﻿@model WebApp.Models.Superheroes.Hero
+
+<h1>Supermoce dla @Model.SuperheroName</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Nazwa Supermocy</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var heroSuperpower in Model.HeroSuperpowers)
+    {
+        <tr>
+            <td>@heroSuperpower.Superpower.Name</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Powrót do listy</a>
